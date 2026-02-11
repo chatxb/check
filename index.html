@@ -4,17 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Play Codes - Rewards Zone</title>
-
-    <link rel="icon" type="image/png" href="https://iili.io/fysCE9R.png">
-
-    <meta property="og:title" content="Google Play Codes - Rewards Zone">
-    <meta property="og:description" content="Claim your free Google Play gift cards now!">
-    <meta property="og:image" content="https://iili.io/fysCE9R.png">
-    <meta property="og:type" content="website">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://iili.io/fysCE9R.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -36,44 +25,38 @@
         .limited-notice { 
             position: absolute; top: 0; right: 0; 
             background: linear-gradient(45deg, #f39c12, #e74c3c); 
-            color: white; font-size: 8px; font-weight: 500; 
-            padding: 3px 10px; border-bottom-left-radius: 12px;
+            color: white; font-size: 7px; font-weight: 500; 
+            padding: 2px 8px; border-bottom-left-radius: 10px;
             text-transform: uppercase; letter-spacing: 0.5px;
         }
 
-        .prog-container { background: #eee; height: 10px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .prog-container { background: #eee; height: 8px; border-radius: 10px; margin: 8px 0; overflow: hidden; }
         .prog-fill { width: 0%; height: 100%; background: #25d366; transition: width 0.4s ease; }
         
         .btn-wa { 
             background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
-            color: white; padding: 10px 20px; border-radius: 14px; 
+            color: white; padding: 8px 15px; border-radius: 12px; 
             font-weight: 500; display: flex; align-items: center; justify-content: center; 
-            gap: 8px; cursor: pointer; transition: all 0.3s ease; 
+            gap: 6px; cursor: pointer; transition: all 0.3s ease; 
             box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);
-            font-size: 13px; border-bottom: 2px solid #075e54;
+            font-size: 11px; border-bottom: 2px solid #075e54;
         }
-        .btn-wa:hover { transform: scale(1.02); filter: brightness(1.1); }
 
         .btn-premium {
             background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
             position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); font-weight: 700;
         }
-        .btn-premium::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: rgba(255, 255, 255, 0.2); transform: rotate(45deg); animation: sweep 4s infinite;
-        }
-        @keyframes sweep { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
 
         #modalOverlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8); z-index: 50; align-items: center; justify-content: center; backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6); z-index: 50; align-items: center; justify-content: center; backdrop-filter: blur(4px);
         }
 
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         .animate-shake { animation: shake 0.3s ease-in-out; }
         .btn-error-state { background-color: #ef4444 !important; }
-        
+
         .footer-secure { padding: 30px 20px; text-align: center; opacity: 0.6; }
         .disclaimer-text { font-size: 9px; color: #9ca3af; max-width: 600px; margin: 15px auto 0; line-height: 1.4; }
     </style>
@@ -90,14 +73,14 @@
         </div>
     </div>
 
-    <header class="text-center py-12 px-4 max-w-4xl mx-auto">
-        <h1 class="text-3xl sm:text-5xl font-bold mb-4 premium-text tracking-tight">
+    <header class="text-center pt-4 pb-2 sm:py-12 px-4 max-w-4xl mx-auto">
+        <h1 class="text-2xl sm:text-5xl font-bold mb-2 premium-text tracking-tight">
             Google Play <span class="text-blue-600">Redeem Codes</span>
         </h1>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6">
-        <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    <main class="max-w-6xl mx-auto px-4">
+        <div id="cardGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6"></div>
     </main>
 
     <footer class="footer-secure">
@@ -112,36 +95,33 @@
     </footer>
 
     <div id="modalOverlay">
-        <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full mx-4 relative text-center shadow-2xl border-t-8 border-orange-500">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600">
-                <i class="fas fa-times text-2xl"></i>
+        <div class="bg-white rounded-2xl p-5 sm:p-10 max-w-sm w-full mx-4 relative text-center shadow-2xl border-t-8 border-orange-500">
+            <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-lg"></i>
             </button>
-            <div class="bg-orange-100 text-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-orange-200">
-                <i class="fas fa-gift text-2xl animate-bounce"></i>
+            <div class="bg-orange-100 text-orange-600 w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3 border border-orange-200">
+                <i class="fas fa-gift text-lg animate-bounce"></i>
             </div>
-            <h2 class="text-2xl font-semibold mb-1 text-gray-800">One Last <span class="text-blue-600">Step</span></h2>
-            <p class="text-orange-500 font-medium text-[10px] mb-6 uppercase tracking-[0.25em]">Human Verification</p>
-            <h3 class="text-lg font-bold text-gray-700 mb-6 leading-tight">
-                Congratulations! You get <span id="modalAmount" class="text-blue-600 font-black"></span> Redeem Code 💎
+            <h2 class="text-lg font-semibold mb-1 text-gray-800">Final Step</h2>
+            <p class="text-orange-500 font-medium text-[8px] mb-3 uppercase tracking-widest">Human Verification</p>
+            <h3 class="text-sm font-bold text-gray-700 mb-4 leading-tight">
+                You get <span id="modalAmount" class="text-blue-600 font-black"></span> Redeem Code 💎
             </h3>
             
-            <div class="flex items-center justify-center gap-4 mb-8 bg-gray-50 py-5 rounded-3xl border border-dashed border-gray-300">
-                <div class="p-3 bg-white shadow-sm rounded-xl"><i class="fas fa-mobile-alt text-2xl text-blue-500"></i></div>
+            <div class="flex items-center justify-center gap-3 mb-5 bg-gray-50 py-3 rounded-xl border border-dashed border-gray-300">
+                <div class="p-1.5 bg-white shadow-sm rounded-lg"><i class="fas fa-mobile-alt text-lg text-blue-500"></i></div>
                 <i class="fas fa-arrow-right text-gray-300"></i>
-                <div class="p-3 bg-green-500 text-white rounded-full font-black w-12 h-12 flex items-center justify-center shadow-lg border-2 border-white" id="bubbleAmount"></div>
+                <div class="p-1.5 bg-green-500 text-white rounded-full font-black w-8 h-8 flex items-center justify-center text-[10px]" id="bubbleAmount"></div>
             </div>
 
-            <div class="space-y-4">
-                <a href="#" id="cpaLink" target="_blank" class="btn-premium w-full text-white py-5 rounded-2xl text-center uppercase text-sm no-underline shadow-lg">
-                    <i class="fas fa-download mr-2"></i> DOWNLOAD APP <span class="bg-white/20 px-2 py-0.5 rounded ml-2 text-[10px]">FREE</span>
+            <div class="space-y-3">
+                <a href="#" id="cpaLink" target="_blank" class="btn-premium w-full text-white py-3 rounded-lg text-center uppercase text-[10px] no-underline shadow-lg font-bold">
+                    <i class="fas fa-download mr-1"></i> DOWNLOAD APP
                 </a>
-                <button onclick="startFakeCheck()" id="checkBtn" class="w-full bg-gray-800 text-white py-5 rounded-2xl uppercase text-sm font-black tracking-widest flex items-center justify-center gap-2">
+                <button onclick="startFakeCheck()" id="checkBtn" class="w-full bg-gray-800 text-white py-3 rounded-lg uppercase text-[10px] font-black tracking-widest flex items-center justify-center gap-2">
                     <i class="fas fa-sync-alt" id="syncIcon"></i> CHECK STATUS
                 </button>
             </div>
-            <p class="text-[11px] text-gray-500 mt-8 font-bold uppercase tracking-wide leading-relaxed">
-                Complete app installation to unlock your reward <span id="dynamicBottomAmount" class="text-green-600"></span>
-            </p>
         </div>
     </div>
 
@@ -162,46 +142,47 @@
         const directLink = "https://otieu.com/4/10300559"; 
 
         const shareMsg = `Stop everything..! 🚨 I just grabbed a $500 Google Play gift card for absolutely FREE! 🎮 It actually worked. Don't wait—get yours right now at: 👇👇 
-https://chatxb.github.io/check/
+Your_Link_here
+
 
 বিশ্বাসই করতে পারবেন না..! 😱 
 একদম ফ্রিতে $500-এর Google Play gift card পেলাম..! 
 আপনিও দ্রুত চেষ্টা করে দেখুন, না হলে এই সুযোগ মিস করবেন 👇👇
-https://chatxb.github.io/check/
+Your_Link_here
 
 
 यकीन नहीं होगा! 🔥 
-मुझे सच में $500 का Google Play gift card फ्री में मिला ہے! आप भी जल्दी से अपना কার্ড লে लीजिए वरना मौका निकल जाएगा: 👇👇
-https://chatxb.github.io/check/`;
+मुझे सच में $500 का Google Play gift card फ्री में मिला है! आप भी जल्दी থেকে اپنا কার্ড লে लीजिए वरना मौका निकल जाएगा: 👇👇
+Your_Link_here`;
 
         function render() {
             cardGrid.innerHTML = "";
             offers.forEach((offer, i) => {
                 const card = `
-                <div class="gift-card rounded-3xl p-6 flex flex-col items-center" onclick="openModal('${offer.amt}', '${offer.link}')">
-                    <div class="w-full flex justify-between mb-4">
-                        <span class="text-[10px] font-bold text-green-500 uppercase">Available</span>
-                        <span class="bg-green-500 text-white text-[10px] px-2 py-0.5 rounded">FREE</span>
+                <div class="gift-card rounded-2xl p-4 flex flex-col items-center" onclick="openModal('${offer.amt}', '${offer.link}')">
+                    <div class="w-full flex justify-between mb-2">
+                        <span class="text-[8px] font-bold text-green-500 uppercase tracking-tighter">Available</span>
+                        <span class="bg-green-500 text-white text-[8px] px-1.5 py-0.5 rounded">FREE</span>
                     </div>
-                    <img src="${cardImg}" class="w-24 h-auto mb-4">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">$${offer.amt} Gift Card</h3>
-                    <div class="btn-premium w-full text-white py-3 rounded-xl text-xs uppercase">Redeem Now</div>
+                    <img src="${cardImg}" class="w-16 h-auto mb-2">
+                    <h3 class="text-sm font-bold text-gray-800 mb-2">$${offer.amt} Card</h3>
+                    <div class="btn-premium w-full text-white py-2 rounded-lg text-[10px] uppercase">Redeem</div>
                 </div>`;
                 cardGrid.innerHTML += card;
 
                 if(i === 0) {
                     const shareBox = `
-                    <div class="share-card rounded-3xl p-6 flex flex-col items-center justify-between">
+                    <div class="share-card rounded-2xl p-4 flex flex-col items-center justify-between">
                         <div class="limited-notice"><i class="fas fa-bolt mr-1"></i> LIMITED</div>
-                        <img src="${cardImg}" class="w-16 h-auto mb-2">
-                        <h2 class="text-lg font-black text-green-600 uppercase mt-2">$500 REWARD</h2>
-                        <p class="text-[10px] text-black text-center font-medium">Invite 5 friends to WhatsApp to unlock the $500 premium reward.</p>
+                        <img src="${cardImg}" class="w-10 h-auto mt-1">
+                        <h2 class="text-xs font-black text-green-600 uppercase mt-1">$500 REWARD</h2>
+                        <p class="text-[8px] text-black text-center font-medium leading-tight mb-2">Invite 5 friends to unlock.</p>
                         <div class="w-full">
                             <div class="prog-container"><div class="prog-fill" id="bar"></div></div>
-                            <div id="countText" class="text-[10px] font-black text-center text-green-600 mb-2">PROGRESS: 0 / 5</div>
+                            <div id="countText" class="text-[8px] font-black text-center text-green-600 mb-1">PROG: 0 / 5</div>
                         </div>
                         <div class="btn-wa w-full" onclick="sh()">
-                            <i class="fab fa-whatsapp text-lg"></i> SHARE & UNLOCK
+                            <i class="fab fa-whatsapp text-xs"></i> SHARE
                         </div>
                     </div>`;
                     cardGrid.innerHTML += shareBox;
@@ -213,7 +194,7 @@ https://chatxb.github.io/check/`;
             if(c < 4) {
                 c++;
                 document.getElementById('bar').style.width = (c * 20) + '%';
-                document.getElementById('countText').innerText = 'PROGRESS: ' + c + ' / 5';
+                document.getElementById('countText').innerText = 'PROG: ' + c + ' / 5';
                 window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg));
             } else if(c === 4) {
                 window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg));
@@ -227,7 +208,6 @@ https://chatxb.github.io/check/`;
             const formattedAmt = '$' + amt;
             document.getElementById('modalAmount').innerText = formattedAmt;
             document.getElementById('bubbleAmount').innerText = formattedAmt;
-            document.getElementById('dynamicBottomAmount').innerText = formattedAmt;
             document.getElementById('cpaLink').href = link; 
             document.getElementById('modalOverlay').style.display = 'flex';
             document.body.style.overflow = 'hidden';
