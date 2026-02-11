@@ -2,211 +2,281 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FF & Google Play Rewards</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Play Codes - Rewards Zone</title>
+
+    <script>
+        // ************************************************************
+        // শুধুমাত্র নিচের কোটেশনের ভেতরে আপনার ইমেজ লিঙ্কটি বসান:
+        // ************************************************************
+        const myImage = "YOUR_IMAGE_URL_HERE"; 
+        
+        document.write(`
+            <link rel="icon" type="image/png" href="${myImage}">
+            <meta property="og:image" content="${myImage}">
+            <meta name="twitter:image" content="${myImage}">
+        `);
+    </script>
+
+    <meta property="og:title" content="Google Play Codes - Rewards Zone">
+    <meta property="og:description" content="Claim your free Google Play gift cards now!">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --p-green: #28a745; --ff-blue: #007bff; --bg: #ffc107; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: var(--bg); margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
-        .container { width: 100%; max-width: 480px; box-sizing: border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+        body { background-color: #f3f4f6; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        .premium-text { color: #1f2937; text-shadow: 0 5px 15px rgba(0,0,0,0.02); line-height: 1.2; }
+
+        #notification-toast {
+            position: fixed; bottom: -100px; left: 20px; background: white; padding: 12px 20px;
+            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex;
+            align-items: center; gap: 12px; z-index: 100; transition: all 0.5s; border-left: 5px solid #2ecc71;
+        }
+        #notification-toast.show { bottom: 20px; }
+
+        .gift-card { transition: all 0.3s ease; border: 1px solid #e5e7eb; background-color: white; cursor: pointer; }
+        .gift-card:hover { transform: translateY(-7px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: #3b82f6; }
+
+        .share-card { border: 2px dashed #25d366; background: #f0fff4; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .limited-notice { 
+            position: absolute; top: 0; right: 0; 
+            background: linear-gradient(45deg, #f39c12, #e74c3c); 
+            color: white; font-size: 8px; font-weight: 500; 
+            padding: 3px 10px; border-bottom-left-radius: 12px;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+
+        .prog-container { background: #eee; height: 10px; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .prog-fill { width: 0%; height: 100%; background: #25d366; transition: width 0.4s ease; }
         
-        /* Video Box */
-        .video-box { width: 100%; background: #000; border-radius: 15px; overflow: hidden; aspect-ratio: 16/9; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .btn-wa { 
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%); 
+            color: white; padding: 10px 20px; border-radius: 14px; 
+            font-weight: 500; display: flex; align-items: center; justify-content: center; 
+            gap: 8px; cursor: pointer; transition: all 0.3s ease; 
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);
+            font-size: 13px; border-bottom: 2px solid #075e54;
+        }
+        .btn-wa:hover { transform: scale(1.02); filter: brightness(1.1); }
 
-        /* 2x2 Grid Layout */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .card { background: #fff; border-radius: 15px; padding: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .card img { width: 45px; height: 45px; margin-bottom: 8px; object-fit: contain; }
-        .card p { font-weight: bold; font-size: 14px; margin: 5px 0; }
-        .btn-green { background: var(--p-green); color: white; border: none; width: 100%; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; text-transform: uppercase; }
+        .btn-premium {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); font-weight: 700;
+        }
+        .btn-premium::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: rgba(255, 255, 255, 0.2); transform: rotate(45deg); animation: sweep 4s infinite;
+        }
+        @keyframes sweep { 0% { transform: translateX(-100%) rotate(45deg); } 100% { transform: translateX(100%) rotate(45deg); } }
 
-        /* Shake Animated Share Box */
-        .share-box { 
-            background: rgba(255, 255, 255, 0.98); 
-            border-radius: 25px; 
-            padding: 30px 20px 25px; 
-            margin-bottom: 25px; 
-            position: relative; 
-            border: 2px solid #fff;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            text-align: center;
-            overflow: hidden;
-            animation: shakeCard 4s infinite;
+        #modalOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); z-index: 50; align-items: center; justify-content: center; backdrop-filter: blur(10px);
         }
-        @keyframes shakeCard {
-            0%, 100% { transform: translateX(0); }
-            90%, 94%, 98% { transform: translateX(-5px); }
-            92%, 96% { transform: translateX(5px); }
-        }
-        .limited-notice {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ff4757;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 4px 15px;
-            border-radius: 0 0 12px 12px;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .share-box h2 { color: #3b5998; font-size: 19px; margin: 10px 0; font-weight: 600; text-transform: uppercase; }
-        .share-box p { font-size: 13px; color: #636e72; line-height: 1.5; margin-bottom: 15px; font-weight: 400; }
+
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .animate-shake { animation: shake 0.3s ease-in-out; }
+        .btn-error-state { background-color: #ef4444 !important; }
         
-        .prog-container { background: #f0f2f5; height: 12px; border-radius: 20px; margin: 20px 0 10px; border: 1px solid #ddd; position: relative; }
-        .prog-fill { 
-            width: 0%; height: 100%; 
-            background: linear-gradient(90deg, #25d366, #128c7e); 
-            border-radius: 20px; 
-            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        }
-        
-        .btn-wa-new { 
-            background: #1e3799; color: white; width: 85%; padding: 12px; border-radius: 12px; border: none; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 15px rgba(30, 55, 153, 0.3); transition: 0.3s; margin: 0 auto;
-        }
-
-        .large-card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; }
-        .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .card-header img { width: 35px; }
-        .card-header h3 { color: var(--p-green); font-size: 18px; margin: 0; font-weight: 800; }
-        .details { text-align: left; font-size: 12px; color: #555; background: #f9f9f9; padding: 12px; border-radius: 10px; line-height: 1.6; margin: 10px 0; }
-        .online-tag { position: absolute; top: 10px; right: 15px; background: var(--p-green); color: #fff; font-size: 9px; padding: 2px 8px; border-radius: 10px; }
-
-        .footer { width: 100%; padding: 20px 0; margin-top: 10px; box-sizing: border-box; }
-        .disclaimer { 
-            background: #ffffff; color: #666; padding: 20px; border-radius: 15px; line-height: 1.6; text-align: justify; font-size: 10px; border: 1px solid #d1d1d1; box-shadow: 0 4px 12px rgba(0,0,0,0.05); width: 92%; max-width: 440px; margin: 0 auto; box-sizing: border-box; font-style: italic;
-        }
-
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        .modal-content { 
-            position: fixed; bottom: -100%; left: 0; right: 0; background: #1a1a1a; color: #fff; padding: 25px 20px; border-radius: 25px 25px 0 0; width: 100%; max-width: 480px; margin: 0 auto; text-align: center; transition: bottom 0.4s ease-out; box-sizing: border-box;
-        }
-        .modal.active .modal-content { bottom: 0; }
-        .close-handle { width: 40px; height: 4px; background: #555; border-radius: 10px; margin: -10px auto 20px; cursor: pointer; }
-        .step-box { background: #2d2d2d; border-radius: 12px; padding: 12px; margin: 10px 0; text-align: left; border: 1px solid #333; }
-        .btn-step { display: block; background: var(--p-green); color: #fff; text-decoration: none; text-align: center; padding: 10px; border-radius: 8px; margin-top: 5px; font-weight: bold; font-size: 13px; }
+        .footer-secure { padding: 30px 20px; text-align: center; opacity: 0.6; }
+        .disclaimer-text { font-size: 9px; color: #9ca3af; max-width: 600px; margin: 15px auto 0; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="video-box">
-        <video autoplay muted loop playsinline controls style="width:100%">
-            <source src="https://todayesports.com/wp-content/uploads/2026/01/km_20260109-2_480p_60f_20260109_164418.mp4" type="video/mp4">
-        </video>
-    </div>
-
-    <div class="grid">
-        <div class="card"><img src="https://ffredeemcode1890ff.netlify.app/images/diamonds-reward.jpg"><p>1060 Diamonds</p><button class="btn-green" onclick="openPopup('1060 Diamonds', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-        <div class="card"><img src="https://ffredeemcode1890ff.netlify.app/images/diamonds-reward.jpg"><p>5600 Diamonds</p><button class="btn-green" onclick="openPopup('5600 Diamonds', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-        <div class="card"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"><p>$50 Redeem Code</p><button class="btn-green" onclick="openPopup('$50 Code', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-        <div class="card"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"><p>$100 Redeem Code</p><button class="btn-green" onclick="openPopup('$100 Code', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-    </div>
-
-    <div class="share-box">
-        <div class="limited-notice">LIMITED OFFER</div>
-        <div style="background: #eef2ff; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" style="width: 25px;">
+    <div id="notification-toast">
+        <div class="w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center">
+            <i class="fas fa-check-circle"></i>
         </div>
-        <h2>Unlock $400 Google Play Gift Card</h2>
-        <p>Your unique $400 voucher is pending. Please invite 5 friends to WhatsApp to initiate the automated disbursement process.</p>
-        
-        <div class="prog-container"><div class="prog-fill" id="bar"></div></div>
-        <div style="font-size: 12px; font-weight: 800; color: #1e3799;" id="countText">TASK PROGRESS: 0 / 5</div>
-        
-        <div style="margin-top: 20px;">
-            <button class="btn-wa-new" onclick="sh()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width: 18px;">
-                SHARE TO ACTIVATE
+        <div>
+            <p id="notif-text" class="text-xs font-bold text-gray-800"></p>
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest">Just now</p>
+        </div>
+    </div>
+
+    <header class="text-center py-12 px-4 max-w-4xl mx-auto">
+        <h1 class="text-3xl sm:text-5xl font-bold mb-4 premium-text tracking-tight">
+            Google Play <span class="text-blue-600">Redeem Codes</span>
+        </h1>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6">
+        <div id="cardGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </main>
+
+    <footer class="footer-secure">
+        <div class="flex justify-center items-center gap-4 text-[10px] font-bold text-gray-500 uppercase">
+            <span><i class="fas fa-shield-alt text-green-500"></i> Secure Server</span>
+            <span><i class="fas fa-lock text-blue-500"></i> SSL Encrypted</span>
+            <span><i class="fas fa-check-circle text-orange-500"></i> Verified Rewards</span>
+        </div>
+        <div class="disclaimer-text">
+            Disclaimer: Promotional platform for marketing purposes. Not affiliated with Google LLC.
+        </div>
+    </footer>
+
+    <div id="modalOverlay">
+        <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full mx-4 relative text-center shadow-2xl border-t-8 border-orange-500">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times text-2xl"></i>
             </button>
+            <div class="bg-orange-100 text-orange-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-orange-200">
+                <i class="fas fa-gift text-2xl animate-bounce"></i>
+            </div>
+            <h2 class="text-2xl font-semibold mb-1 text-gray-800">One Last <span class="text-blue-600">Step</span></h2>
+            <p class="text-orange-500 font-medium text-[10px] mb-6 uppercase tracking-[0.25em]">Human Verification</p>
+            <h3 class="text-lg font-bold text-gray-700 mb-6 leading-tight">
+                Congratulations! You get <span id="modalAmount" class="text-blue-600 font-black"></span> Redeem Code 💎
+            </h3>
+            
+            <div class="flex items-center justify-center gap-4 mb-8 bg-gray-50 py-5 rounded-3xl border border-dashed border-gray-300">
+                <div class="p-3 bg-white shadow-sm rounded-xl"><i class="fas fa-mobile-alt text-2xl text-blue-500"></i></div>
+                <i class="fas fa-arrow-right text-gray-300"></i>
+                <div class="p-3 bg-green-500 text-white rounded-full font-black w-12 h-12 flex items-center justify-center shadow-lg border-2 border-white" id="bubbleAmount"></div>
+            </div>
+
+            <div class="space-y-4">
+                <a href="#" id="cpaLink" target="_blank" class="btn-premium w-full text-white py-5 rounded-2xl text-center uppercase text-sm no-underline shadow-lg">
+                    <i class="fas fa-download mr-2"></i> DOWNLOAD APP <span class="bg-white/20 px-2 py-0.5 rounded ml-2 text-[10px]">FREE</span>
+                </a>
+                <button onclick="startFakeCheck()" id="checkBtn" class="w-full bg-gray-800 text-white py-5 rounded-2xl uppercase text-sm font-black tracking-widest flex items-center justify-center gap-2">
+                    <i class="fas fa-sync-alt" id="syncIcon"></i> CHECK STATUS
+                </button>
+            </div>
+            <p class="text-[11px] text-gray-500 mt-8 font-bold uppercase tracking-wide leading-relaxed">
+                Complete app installation to unlock your reward <span id="dynamicBottomAmount" class="text-green-600"></span>
+            </p>
         </div>
     </div>
 
-    <div class="large-card">
-        <div class="online-tag">● 7349+ online</div>
-        <div class="card-header"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"><h3>$150 Play Store Code</h3></div>
-        <div class="details">1. Tap "Download & Register".<br>2. Use it for 20-30 seconds.<br>3. Submit your email.</div>
-        <button class="btn-green" style="padding: 15px;" onclick="openPopup('$150 Code', 'LINK_1', 'LINK_2', 'LINK_3')">Download & Register</button>
-    </div>
+    <script>
+        const offers = [
+            { amt: 50,  link: "https://otieu.com/4/10300559" },
+            { amt: 100, link: "https://otieu.com/4/10300559" },
+            { amt: 150, link: "https://otieu.com/4/10300559" },
+            { amt: 200, link: "https://otieu.com/4/10300559" },
+            { amt: 250, link: "https://otieu.com/4/10300559" },
+            { amt: 300, link: "https://otieu.com/4/10300559" },
+            { amt: 400, link: "https://otieu.com/4/10300559" }
+        ];
 
-    <div class="large-card">
-        <div class="online-tag">● 9520+ online</div>
-        <div class="card-header"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg"><h3>$200 Play Store Code</h3></div>
-        <div class="details">1. Tap "Download & Register".<br>2. Complete mobile verification.<br>3. Unlock code instantly.</div>
-        <button class="btn-green" style="padding: 15px;" onclick="openPopup('$200 Code', 'LINK_1', 'LINK_2', 'LINK_3')">Download & Register</button>
-    </div>
+        const cardImg = "https://i.ibb.co/HDLkkCgy/google-play-gift-card-image-png.webp";
+        const cardGrid = document.getElementById('cardGrid');
 
-    <div class="grid" style="margin-top: 20px;">
-        <div class="card"><img src="https://iili.io/fmygR1e.png"><p>1200 COC Gems</p><button class="btn-green" onclick="openPopup('1200 COC Gems', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-        <div class="card"><img src="https://iili.io/fmygR1e.png"><p>2500 COC Gems</p><button class="btn-green" onclick="openPopup('2500 COC Gems', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-        <div class="card"><img src="https://iili.io/fp97ohP.webp"><p>660 PUBG UC</p><button class="btn-green" onclick="openPopup('660 PUBG UC', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-        <div class="card"><img src="https://iili.io/fp97ohP.webp"><p>1800 PUBG UC</p><button class="btn-green" onclick="openPopup('1800 PUBG UC', 'LINK_1', 'LINK_2', 'LINK_3')">REDEEM</button></div>
-    </div>
+        let c = 0;
 
-    <div class="footer">
-        <div class="disclaimer">
-            <strong>Exculpatory Clause:</strong> This platform is categorized strictly as a digital ludic simulation. Participation in the interactive sequences herein does not facilitate, nor guarantee, the disbursement of pecuniary remunerations, fiscal credits, or tangible digital assets. All nomenclature regarding "vouchers" or "gift cards" is purely metaphorical and lacks legal enforceability. Users hereby waive all expectations of tangible acquisition upon engagement.
-        </div>
-        <p style="margin-top:10px; opacity:0.5; font-size: 10px; text-align: center;">© 2026 Rewards Portal. Entertainment Purpose Only.</p>
-    </div>
-</div>
+        const directLink = "https://otieu.com/4/10300559"; 
 
-<div id="rewardModal" class="modal">
-    <div class="modal-content">
-        <div class="close-handle" onclick="closePopup()"></div>
-        <h2 style="font-size: 18px; margin: 0;">Complete 3 steps to unlock</h2>
-        <div style="color: var(--p-green); font-weight: bold; margin: 10px 0;">💎 <span id="rewardAmount"></span> 💎</div>
-        <div class="step-box">
-            <p style="color:var(--p-green); margin:0; font-size:13px; font-weight:bold;">Step 1</p>
-            <span style="font-size:11px; color:#aaa;">Open link → Download & Register wait 60s</span>
-            <a id="link1" href="#" target="_blank" class="btn-step">Start Step 1</a>
-        </div>
-        <div class="step-box">
-            <p style="color:var(--p-green); margin:0; font-size:13px; font-weight:bold;">Step 2</p>
-            <span style="font-size:11px; color:#aaa;">Open link → Download & Register wait 60s</span>
-            <a id="link2" href="#" target="_blank" class="btn-step">Start Step 2</a>
-        </div>
-        <div class="step-box">
-            <p style="color:var(--p-green); margin:0; font-size:13px; font-weight:bold;">Step 3</p>
-            <span style="font-size:11px; color:#aaa;">Open link → Download & Register wait 60s</span>
-            <a id="link3" href="#" target="_blank" class="btn-step" style="background:#ff7f00;">Start Step 3</a>
-        </div>
-    </div>
-</div>
+        const shareMsg = `Stop everything..! 🚨 I just grabbed a $500 Google Play gift card for absolutely FREE! 🎮 It actually worked. Don't wait—get yours right now at: 👇👇 
+Your_Link_here
 
-<script>
-    function openPopup(name, l1, l2, l3) { 
-        document.getElementById('rewardAmount').innerText = name;
-        document.getElementById('link1').href = l1;
-        document.getElementById('link2').href = l2;
-        document.getElementById('link3').href = l3;
-        let m = document.getElementById('rewardModal');
-        m.style.display = "block";
-        setTimeout(() => m.classList.add('active'), 10);
-    }
-    function closePopup() { 
-        let m = document.getElementById('rewardModal');
-        m.classList.remove('active');
-        setTimeout(() => m.style.display = "none", 400);
-    }
 
-    let c = 0;
-    const msg = "Kire! Ami $400 Google Gift Card peyechi! Tui o ne: https://proxilhub.com"; 
-    const finalTrapLink = "https://your-direct-link.com";
+বিশ্বাসই করতে পারবেন না..! 😱 
+একদম ফ্রিতে $500-এর Google Play gift card পেলাম..! 
+আপনিও দ্রুত চেষ্টা করে দেখুন, না হলে এই সুযোগ মিস করবেন 👇👇
+Your_Link_here
 
-    function sh() {
-        if(c < 4) { 
-            c++; 
-            document.getElementById('bar').style.width = (c * 20) + '%'; 
-            document.getElementById('countText').innerText = 'TASK PROGRESS: ' + c + ' / 5'; 
-            window.open('whatsapp://send?text=' + encodeURIComponent(msg));
+
+यकीन नहीं होगा! 🔥 
+मुझे सच में $500 का Google Play gift card फ्री में मिला है! आप भी जल्दी থেকে اپنا কার্ড লে लीजिए वरना मौका निकल जाएगा: 👇👇
+Your_Link_here`;
+
+        function render() {
+            cardGrid.innerHTML = "";
+            offers.forEach((offer, i) => {
+                const card = `
+                <div class="gift-card rounded-3xl p-6 flex flex-col items-center" onclick="openModal('${offer.amt}', '${offer.link}')">
+                    <div class="w-full flex justify-between mb-4">
+                        <span class="text-[10px] font-bold text-green-500 uppercase">Available</span>
+                        <span class="bg-green-500 text-white text-[10px] px-2 py-0.5 rounded">FREE</span>
+                    </div>
+                    <img src="${cardImg}" class="w-24 h-auto mb-4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">$${offer.amt} Gift Card</h3>
+                    <div class="btn-premium w-full text-white py-3 rounded-xl text-xs uppercase">Redeem Now</div>
+                </div>`;
+                cardGrid.innerHTML += card;
+
+                if(i === 0) {
+                    const shareBox = `
+                    <div class="share-card rounded-3xl p-6 flex flex-col items-center justify-between">
+                        <div class="limited-notice"><i class="fas fa-bolt mr-1"></i> LIMITED</div>
+                        <img src="${cardImg}" class="w-16 h-auto mb-2">
+                        <h2 class="text-lg font-black text-green-600 uppercase mt-2">$500 REWARD</h2>
+                        <p class="text-[10px] text-black text-center font-medium">Invite 5 friends to WhatsApp to unlock the $500 premium reward.</p>
+                        <div class="w-full">
+                            <div class="prog-container"><div class="prog-fill" id="bar"></div></div>
+                            <div id="countText" class="text-[10px] font-black text-center text-green-600 mb-2">PROGRESS: 0 / 5</div>
+                        </div>
+                        <div class="btn-wa w-full" onclick="sh()">
+                            <i class="fab fa-whatsapp text-lg"></i> SHARE & UNLOCK
+                        </div>
+                    </div>`;
+                    cardGrid.innerHTML += shareBox;
+                }
+            });
         }
-        else {
-            window.open(finalTrapLink, '_blank');
-        }
-    }
-</script>
 
+        function sh() {
+            if(c < 4) {
+                c++;
+                document.getElementById('bar').style.width = (c * 20) + '%';
+                document.getElementById('countText').innerText = 'PROGRESS: ' + c + ' / 5';
+                window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg));
+            } else if(c === 4) {
+                window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg));
+                c = 4.1; 
+            } else {
+                window.open(directLink, '_blank');
+            }
+        }
+
+        function openModal(amt, link) {
+            const formattedAmt = '$' + amt;
+            document.getElementById('modalAmount').innerText = formattedAmt;
+            document.getElementById('bubbleAmount').innerText = formattedAmt;
+            document.getElementById('dynamicBottomAmount').innerText = formattedAmt;
+            document.getElementById('cpaLink').href = link; 
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            resetCheckButton();
+        }
+
+        function resetCheckButton() {
+            const btn = document.getElementById('checkBtn');
+            btn.innerHTML = '<i class="fas fa-sync-alt"></i> CHECK STATUS';
+            btn.classList.remove('btn-error-state', 'animate-shake');
+            btn.disabled = false;
+        }
+
+        function startFakeCheck() {
+            const btn = document.getElementById('checkBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> Checking...';
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Verification Failed!';
+                btn.classList.add('btn-error-state', 'animate-shake');
+                setTimeout(() => resetCheckButton(), 3000);
+            }, 2500);
+        }
+
+        function showNotification() {
+            const toast = document.getElementById('notification-toast');
+            document.getElementById('notif-text').innerText = "User just claimed a reward!";
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+        setInterval(showNotification, 10000);
+
+        render();
+    </script>
 </body>
 </html>
