@@ -1,1 +1,474 @@
-yuik
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Rewards | Exclusive Offers</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset & Smooth Scrolling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Soft Blurred Pink Background */
+        body {
+            background: linear-gradient(135deg, #ffe6f0 0%, #fff0f5 50%, #ffe6eb 100%);
+            position: relative;
+            color: #111;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Adding a glowing blurred pink orb effect in the background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 20%;
+            left: 10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 105, 180, 0.15);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: 10%;
+            right: 10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 182, 193, 0.2);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        /* Header (Glassmorphism effect) */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Menu Container (Now on the Left) */
+        .menu-container {
+            position: relative;
+            display: inline-block;
+            flex: 1; /* Helps balance the header flexbox */
+        }
+
+        .menu-icon {
+            font-size: 28px;
+            cursor: pointer;
+            color: #333;
+            transition: color 0.3s;
+            user-select: none;
+        }
+        
+        .menu-icon:hover {
+            color: #ff4da6;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            left: 0;
+            top: 45px;
+            background-color: #FFFFFF;
+            min-width: 220px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 200;
+            border: 1px solid #f0f0f0;
+        }
+
+        .dropdown-menu a {
+            color: #444;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            border-bottom: 1px solid #f9f9f9;
+            transition: all 0.3s;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #fff0f5;
+            color: #ff4da6;
+            padding-left: 25px; /* Slight indent on hover for premium feel */
+        }
+
+        /* Logo (Center) */
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111;
+            text-align: center;
+            flex: 1;
+            letter-spacing: -0.5px;
+        }
+
+        /* Status (Right) */
+        .header-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 1;
+        }
+
+        .live-status {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #1ed760;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 0 rgba(30, 215, 96, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(30, 215, 96, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(30, 215, 96, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(30, 215, 96, 0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #111;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Grid Section (Floating Cards) */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            /* Heavy soft shadow to make them float/bashbe */
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.15), 0 5px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.8);
+            scroll-margin-top: 120px; 
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 45px rgba(255, 105, 180, 0.25), 0 10px 20px rgba(0,0,0,0.06);
+            border-color: #ffd1df;
+        }
+
+        /* Shake Animation Class */
+        .shake-active {
+            animation: shakeAlert 0.6s cubic-bezier(.36,.07,.19,.97) both;
+            border: 2px solid #ff4da6; /* Highlights border during shake */
+        }
+
+        @keyframes shakeAlert {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+            40%, 60% { transform: translate3d(8px, 0, 0); }
+        }
+
+        .card-logo {
+            height: 70px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card-logo img, .card-logo svg {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            min-height: 40px;
+        }
+
+        /* Action Button */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            background: linear-gradient(135deg, #111, #333);
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #ff4da6, #ff1a8c);
+            box-shadow: 0 8px 20px rgba(255, 77, 166, 0.4);
+            transform: scale(1.02);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+            color: #666;
+            border-top: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #ff4da6;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .logo { font-size: 18px; }
+            .hero h1 { font-size: 26px; }
+            footer { flex-direction: column; gap: 15px; text-align: center; }
+            .footer-links { margin-bottom: 10px; }
+            .footer-links a { margin: 0 10px; }
+            .live-status { font-size: 12px; padding: 5px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Hamburger Menu on Left -->
+    <header>
+        <div class="menu-container">
+            <!-- Hamburger Icon (3 Lines) -->
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <div class="dropdown-menu" id="offerMenu">
+                <!-- JS Function trigger to scroll and shake -->
+                <a href="#" onclick="scrollToOffer(event, 'offer-googleplay')">Google Play Card</a>
+                <a href="#" onclick="scrollToOffer(event, 'offer-xbox')">Xbox Live Gold</a>
+                <a href="#" onclick="scrollToOffer(event, 'offer-amazon')">Amazon Gift Card</a>
+                <a href="#" onclick="scrollToOffer(event, 'offer-paypal')">PayPal Cash</a>
+                <a href="#" onclick="scrollToOffer(event, 'offer-steam')">Steam Wallet</a>
+                <a href="#" onclick="scrollToOffer(event, 'offer-netflix')">Netflix Premium</a>
+            </div>
+        </div>
+
+        <div class="logo">GLOBAL REWARDS</div>
+
+        <div class="header-right">
+            <div class="live-status">
+                <span class="pulse-dot"></span> LIVE
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Select Your Premium Gift Card</h1>
+        <p>Choose an offer below and complete a quick survey to claim your reward!</p>
+    </section>
+
+    <!-- Cards Container -->
+    <div class="container">
+        
+        <!-- Google Play -->
+        <div class="card" id="offer-googleplay">
+            <div class="card-logo">
+                <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path fill="#ea4335" d="M7.4 4.1c-.3.3-.5.9-.5 1.5v36.7c0 .7.2 1.2.5 1.5l.1.1L26 25.1v-.2L7.5 4l-.1.1z"/>
+                    <path fill="#fbbc04" d="M32.2 31.4L26 25.2v-.5l6.2-6.2.1.1 7.3 4.2c2.1 1.2 2.1 3.1 0 4.3l-7.3 4.2-.1.1z"/>
+                    <path fill="#34a853" d="M26.1 25v.2L7.4 43.9c.7.7 1.8.8 3.1.1l21.8-12.4-6.2-6.2z"/>
+                    <path fill="#4285f4" d="M26.1 25l6.2-6.2L10.5 6.4c-1.3-.7-2.4-.7-3.1.1L26.1 24.8v.2z"/>
+                </svg>
+            </div>
+            <h3>$100 Google Play Card</h3>
+            <p>Get a free $100 Google Play code for apps and games.</p>
+            <a href="YOUR_CPA_LINK_HERE" class="btn">Claim Offer</a>
+        </div>
+
+        <!-- Xbox -->
+        <div class="card" id="offer-xbox">
+            <div class="card-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Xbox_one_logo.svg" alt="Xbox">
+            </div>
+            <h3>Xbox Live Gold</h3>
+            <p>Claim your free Xbox Live Gold membership instantly.</p>
+            <a href="YOUR_CPA_LINK_HERE" class="btn">Claim Offer</a>
+        </div>
+
+        <!-- Amazon -->
+        <div class="card" id="offer-amazon">
+            <div class="card-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" style="margin-top: 15px;">
+            </div>
+            <h3>$75 Amazon Gift Card</h3>
+            <p>Shop on Amazon with a free $75 gift card balance.</p>
+            <a href="YOUR_CPA_LINK_HERE" class="btn">Claim Offer</a>
+        </div>
+
+        <!-- PayPal -->
+        <div class="card" id="offer-paypal">
+            <div class="card-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+            </div>
+            <h3>$100 PayPal Cash</h3>
+            <p>Receive $100 transferred directly to your PayPal account.</p>
+            <a href="YOUR_CPA_LINK_HERE" class="btn">Claim Offer</a>
+        </div>
+
+        <!-- Steam -->
+        <div class="card" id="offer-steam">
+            <div class="card-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Steam_icon_logo.svg" alt="Steam">
+            </div>
+            <h3>$50 Steam Wallet</h3>
+            <p>Add $50 to your Steam Wallet to buy your favorite games.</p>
+            <a href="YOUR_CPA_LINK_HERE" class="btn">Claim Offer</a>
+        </div>
+
+        <!-- Netflix -->
+        <div class="card" id="offer-netflix">
+            <div class="card-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" style="margin-top: 15px;">
+            </div>
+            <h3>1 Year Netflix Premium</h3>
+            <p>Enjoy a full year of Netflix 4K streaming for free.</p>
+            <a href="YOUR_CPA_LINK_HERE" class="btn">Claim Offer</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+        </div>
+        <div>&copy; 2026 PremiumRewards Inc.</div>
+    </footer>
+
+    <!-- JavaScript for Menu, Scrolling, and Shake Animation -->
+    <script>
+        // Toggle Dropdown Menu
+        function toggleMenu() {
+            var menu = document.getElementById("offerMenu");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
+        }
+
+        // Close menu if clicked outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-icon')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+
+        // Scroll to specific offer and apply Shake Animation
+        function scrollToOffer(event, offerId) {
+            event.preventDefault(); // Prevent default anchor jump
+            toggleMenu(); // Close the menu
+
+            var targetCard = document.getElementById(offerId);
+            
+            // Smoothly scroll to the card
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Wait a moment for scroll to finish, then trigger shake
+            setTimeout(function() {
+                // Add shake class
+                targetCard.classList.add("shake-active");
+
+                // Remove shake class after animation finishes (600ms) so it can trigger again later
+                setTimeout(function() {
+                    targetCard.classList.remove("shake-active");
+                }, 700);
+            }, 500); // 500ms delay to allow scrolling to complete
+        }
+    </script>
+</body>
+</html>
