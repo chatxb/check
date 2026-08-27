@@ -31,9 +31,10 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
         }
 
-        .clean-shadow { box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08); }
+        .clean-shadow { box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.08); }
         
         .robux-card {
             background: #ffffff;
@@ -43,9 +44,9 @@
             touch-action: manipulation;
         }
         .robux-card:hover, .robux-card.active {
-            border-color: #38bdf8;
-            background: #f0f9ff;
-            box-shadow: 0 8px 20px -4px rgba(56, 189, 248, 0.25);
+            border-color: #0ea5e9 !important;
+            background-color: #f0f9ff !important;
+            box-shadow: 0 8px 20px -4px rgba(14, 165, 233, 0.3) !important;
             transform: translateY(-3px);
         }
 
@@ -58,10 +59,10 @@
             touch-action: manipulation;
         }
         .platform-card:hover, .platform-card.active {
-            background: #38bdf8;
+            background: #0ea5e9;
             color: #ffffff;
-            border-color: #38bdf8;
-            box-shadow: 0 6px 16px rgba(56, 189, 248, 0.3);
+            border-color: #0ea5e9;
+            box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3);
         }
 
         .btn-primary {
@@ -83,30 +84,26 @@
         }
         @keyframes shine { 100% { left: 200%; } }
 
-        .terminal { background: #0f172a; border: 2px solid #1e293b; border-radius: 12px; padding: 12px; font-family: monospace; color: #4ade80; font-size: 12px; height: 140px; overflow-y: auto; text-align: left; box-shadow: inset 0 4px 10px rgba(0,0,0,0.5);}
-        .terminal p { margin: 4px 0; }
-        
-        /* 📱 100% MOBILE PERFECT RESPONSIVE MODAL 📱 */
+        /* 📱 RESPONSIVE MODAL 📱 */
         #modalOverlay { 
             display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); 
             z-index: 10000; align-items: center; justify-content: center; 
-            backdrop-filter: blur(8px); padding: 12px; 
+            backdrop-filter: blur(8px); padding: 35px 12px 12px; 
         }
         .modal-content { 
             background: #ffffff; border-radius: 24px; 
-            width: 100%; max-width: 360px; /* Perfect Mobile Width */
-            max-height: 90vh;
+            width: 100%; max-width: 360px;
+            max-height: 85vh;
             margin: auto;
             display: flex; flex-direction: column;
             text-align: center; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); 
             animation: popUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            position: relative; overflow: hidden;
+            position: relative; overflow: visible;
         }
         
-        /* PC View Adjustments for Modal */
         @media (min-width: 640px) {
             .modal-content { max-width: 440px; border-radius: 28px; }
-            .modal-header-bg { padding: 40px 20px 20px !important; }
+            .modal-header-bg { padding: 45px 20px 20px !important; }
             .modal-body-scroll { padding: 20px 24px !important; }
         }
 
@@ -114,20 +111,20 @@
         
         .modal-header-bg { 
             background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); 
-            padding: 35px 15px 15px; border-bottom: 1px dashed #bae6fd; 
+            padding: 40px 15px 15px; border-bottom: 1px dashed #bae6fd; 
             border-radius: 24px 24px 0 0; 
             display: flex; flex-direction: column; align-items: center;
             position: relative;
         }
         .modal-icon-wrapper { 
-            position: absolute; top: -28px; left: 50%; transform: translateX(-50%); 
-            width: 58px; height: 58px; background: white; border-radius: 50%; 
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%); 
+            width: 60px; height: 60px; background: white; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
             box-shadow: 0 8px 20px rgba(14, 165, 233, 0.25); border: 3.5px solid #f0f9ff; z-index: 10; 
         }
         .modal-body-scroll { 
             flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;
-            overflow-y: auto; padding: 16px 14px; 
+            overflow-y: auto; padding: 16px 14px; border-radius: 0 0 24px 24px;
         }
         .modal-body-scroll::-webkit-scrollbar { width: 0px; }
         
@@ -146,12 +143,12 @@
     </header>
 
     <!-- Main Content -->
-    <main class="w-full max-w-md sm:max-w-lg mx-auto px-3.5 sm:px-5 py-5 sm:py-8 text-center flex-grow">
+    <main class="w-full max-w-md sm:max-w-lg mx-auto px-4 py-8 text-center my-auto flex flex-col justify-center items-center">
         
-        <p class="text-slate-500 font-semibold mb-4 sm:mb-6 text-[11px] sm:text-[13px] uppercase tracking-widest">Select options to claim reward</p>
+        <p class="text-slate-500 font-semibold mb-4 text-[11px] sm:text-[13px] uppercase tracking-widest">Select options to claim reward</p>
 
         <!-- Main Card -->
-        <div class="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-slate-200 clean-shadow w-full" id="mainApp">
+        <div class="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-slate-200 clean-shadow w-full" id="mainApp">
             
             <!-- STEP 1 -->
             <div id="step1" class="space-y-4 sm:space-y-5 transition-all duration-300">
@@ -159,16 +156,16 @@
                 <input type="text" id="username" placeholder="Roblox Username..." autocomplete="off" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 sm:py-3.5 text-slate-800 font-semibold focus:border-sky-500 focus:bg-white focus:outline-none transition-colors text-center text-sm sm:text-base shadow-inner">
                 
                 <h2 class="text-base sm:text-lg font-bold text-slate-700 pt-2 flex items-center justify-center gap-2"><i class="fas fa-server text-sky-500"></i> Select Platform (Optional)</h2>
-                <div class="grid grid-cols-3 gap-2 sm:gap-3">
-                    <div class="platform-card rounded-xl p-2.5 sm:p-3.5" onclick="selectPlatform(this, 'PC')">
+                <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+                    <div class="platform-card rounded-xl p-3 sm:p-3.5" onclick="selectPlatform(this, 'PC')">
                         <i class="fas fa-desktop text-lg sm:text-2xl mb-1"></i>
                         <p class="text-[10px] sm:text-[12px] font-semibold">PC</p>
                     </div>
-                    <div class="platform-card rounded-xl p-2.5 sm:p-3.5" onclick="selectPlatform(this, 'Mobile')">
+                    <div class="platform-card rounded-xl p-3 sm:p-3.5" onclick="selectPlatform(this, 'Mobile')">
                         <i class="fas fa-mobile-alt text-lg sm:text-2xl mb-1"></i>
                         <p class="text-[10px] sm:text-[12px] font-semibold">Mobile</p>
                     </div>
-                    <div class="platform-card rounded-xl p-2.5 sm:p-3.5" onclick="selectPlatform(this, 'Xbox')">
+                    <div class="platform-card rounded-xl p-3 sm:p-3.5" onclick="selectPlatform(this, 'Xbox')">
                         <i class="fab fa-xbox text-lg sm:text-2xl mb-1"></i>
                         <p class="text-[10px] sm:text-[12px] font-semibold">Xbox</p>
                     </div>
@@ -182,7 +179,7 @@
                 <button onclick="nextStep(2)" class="w-full btn-primary btn-shine text-white font-bold py-3.5 sm:py-4 rounded-xl uppercase tracking-wider mt-4 text-[12px] sm:text-[14px]">Next Step <i class="fas fa-arrow-right ml-1"></i></button>
             </div>
 
-            <!-- STEP 2: EXACT 4 CARDS (10K, 25K, 50K, 100K) -->
+            <!-- STEP 2: USER SELECTS AMOUNT -->
             <div id="step2" class="space-y-4 sm:space-y-5 hidden transition-all duration-300">
                 <h2 class="text-base sm:text-lg font-bold text-slate-700 flex items-center justify-center gap-2"><i class="fas fa-coins text-sky-500"></i> Select Reward Amount</h2>
                 
@@ -202,9 +199,9 @@
                         <h3 class="text-base sm:text-xl font-bold text-slate-800">50,000</h3>
                         <p class="text-[10px] sm:text-[12px] text-sky-600 font-semibold mt-0.5">Robux</p>
                     </div>
-                    <div class="robux-card rounded-xl sm:rounded-2xl p-3.5 sm:p-5 border-sky-400 bg-sky-50/50" onclick="selectRobux(this, '100,000')">
+                    <div class="robux-card rounded-xl sm:rounded-2xl p-3.5 sm:p-5" onclick="selectRobux(this, '100,000')">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Roblox_player_icon_black.svg" class="w-8 h-8 sm:w-11 sm:h-11 mx-auto mb-1.5 opacity-80">
-                        <h3 class="text-base sm:text-xl font-bold text-sky-600">100,000</h3>
+                        <h3 class="text-base sm:text-xl font-bold text-slate-800">100,000</h3>
                         <p class="text-[10px] sm:text-[12px] text-sky-600 font-bold mt-0.5">👑 VIP MAX</p>
                     </div>
                 </div>
@@ -215,19 +212,13 @@
                 
                 <div class="flex gap-2.5 mt-3">
                     <button onclick="prevStep(1)" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-3 sm:py-3.5 rounded-xl text-xs sm:text-sm transition-colors"><i class="fas fa-arrow-left"></i></button>
-                    <button onclick="startProcess()" class="w-2/3 btn-primary btn-shine text-white font-bold py-3 sm:py-3.5 rounded-xl uppercase tracking-wider text-[12px] sm:text-[14px]">Generate <i class="fas fa-cogs ml-1"></i></button>
+                    <button onclick="startProcess()" class="w-2/3 btn-primary btn-shine text-white font-bold py-3 sm:py-3.5 rounded-xl uppercase tracking-wider text-[12px] sm:text-[14px]">Generate <i class="fas fa-arrow-right ml-1"></i></button>
                 </div>
             </div>
 
-            <!-- STEP 3 -->
-            <div id="step3" class="space-y-3 hidden">
-                <h2 class="text-sm sm:text-base font-bold text-slate-700 mb-2">Processing Request...</h2>
-                <div class="terminal" id="console"><p>> Starting secure connection...</p></div>
-                <div class="w-full bg-slate-100 rounded-full h-2 mt-3 overflow-hidden border border-slate-200"><div id="progressBar" class="bg-sky-500 h-2 rounded-full w-0 transition-all duration-300 shadow-[0_0_8px_rgba(14,165,233,0.6)]"></div></div>
-            </div>
         </div>
 
-        <!-- Live Activity -->
+        <!-- Live Activity Box -->
         <div class="mt-5 text-left bg-white p-3 rounded-xl sm:rounded-2xl border border-slate-200 clean-shadow w-full overflow-hidden">
             <h3 class="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-2 flex items-center px-1"><i class="fas fa-broadcast-tower text-emerald-500 mr-1.5 animate-pulse"></i> Live Activity</h3>
             <div id="activity-log" class="space-y-1.5 h-[65px] overflow-hidden relative w-full"></div>
@@ -235,7 +226,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-4 text-center text-slate-500 text-[10px] sm:text-[11px] font-medium border-t border-slate-200 bg-white mt-auto">
+    <footer class="py-4 text-center text-slate-500 text-[10px] sm:text-[11px] font-medium border-t border-slate-200 bg-white w-full">
         <p class="max-w-xl mx-auto px-4 leading-relaxed">Independent educational giveaway platform. NOT affiliated with Roblox Corporation.</p>
     </footer>
 
@@ -302,7 +293,7 @@
     <!-- Script Controller -->
     <script>
         let selectedPlatform = '';
-        let selectedAmount = '';
+        let selectedAmount = ''; // 🔥 NO CARD AUTO-SELECTED BY DEFAULT
         let timerInterval;
 
         // 🔥 Reliable CPA Locker Trigger Function
@@ -366,32 +357,7 @@
             }
             errorMsg.classList.add('hidden');
             const username = document.getElementById('username').value;
-            document.getElementById('step2').classList.add('hidden');
-            document.getElementById('step3').classList.remove('hidden');
-            const consoleEl = document.getElementById('console');
-            const bar = document.getElementById('progressBar');
-            const messages = [
-                `> Searching username: <span class="text-white">${username}</span>...`,
-                `> User found on platform: <span class="text-sky-400">${selectedPlatform}</span>`,
-                `> Preparing <span class="text-yellow-400">${selectedAmount} Robux</span>...`,
-                `> Bypassing security protocols...`,
-                `> Saving data...`,
-                `> Finalizing... <span class="blink">_</span>`
-            ];
-            let i = 0; let progress = 0;
-            const interval = setInterval(() => {
-                if(i < messages.length) {
-                    consoleEl.innerHTML += `<p>${messages[i]}</p>`;
-                    consoleEl.scrollTop = consoleEl.scrollHeight;
-                    progress += 16;
-                    bar.style.width = `${progress}%`;
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    bar.style.width = `100%`;
-                    setTimeout(() => { showModal(username, selectedAmount); }, 1000);
-                }
-            }, 1200);
+            showModal(username, selectedAmount);
         }
 
         function startTimer() {
